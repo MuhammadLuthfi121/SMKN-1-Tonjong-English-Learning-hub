@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SMK English Interactive Learning Hub 2.0</title>
+<style>
+:root{--navy:#103b62;--blue:#21689c;--sky:#eaf3fa;--gold:#e8b63f;--green:#2d956c;--red:#d45b5b;--ink:#183247;--muted:#718392;--white:#fff;--shadow:0 12px 30px rgba(16,59,98,.10)}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:#f2f7fb;color:var(--ink)}
+button,input,select,textarea{font:inherit}button{cursor:pointer}
+header{background:linear-gradient(120deg,#10385d,#246b9e);color:#fff;padding:14px 5%;display:flex;justify-content:space-between;align-items:center;gap:16px;position:sticky;top:0;z-index:50}
+.brand{font-weight:900;font-size:19px}.brand small{display:block;font-weight:500;font-size:11px;opacity:.8}.topstats{display:flex;gap:7px;flex-wrap:wrap}.pill{background:rgba(255,255,255,.14);padding:7px 11px;border-radius:10px;font-size:12px}
+nav{display:flex;gap:5px;padding:9px 5%;background:#fff;box-shadow:0 2px 12px #0000000b;position:sticky;top:68px;z-index:40;overflow:auto}
+nav button{border:0;background:transparent;color:#38566b;padding:9px 12px;border-radius:9px;font-weight:800;white-space:nowrap}nav button.active{background:#e8f2f9;color:#15547f}
+main{max-width:1200px;margin:24px auto;padding:0 16px}.page{display:none}.page.active{display:block}
+.hero{background:linear-gradient(135deg,#15466f,#2a71a5);color:#fff;border-radius:22px;padding:30px;display:grid;grid-template-columns:1.4fr .8fr;gap:24px;box-shadow:var(--shadow)}
+.hero h1{font-size:34px;margin:10px 0}.hero p{line-height:1.6}.tag{display:inline-block;background:#fff;color:#19567f;padding:6px 11px;border-radius:18px;font-size:11px;font-weight:900}
+.card{background:#fff;border-radius:16px;padding:19px;box-shadow:var(--shadow);border:1px solid #e3ebf0}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}
+.section{margin-top:20px}.section-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.section-title h2{margin:0;font-size:20px}
+.btn{border:0;border-radius:10px;padding:10px 15px;font-weight:900;background:var(--gold);color:#26323a}.btn.blue{background:var(--blue);color:#fff}.btn.green{background:var(--green);color:#fff}.btn.ghost{background:#edf4f8;color:#31566e}.btn.red{background:var(--red);color:#fff}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}
+.progress{height:11px;background:#dce8ef;border-radius:20px;overflow:hidden}.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,#e7b43b,#2d956c);transition:.4s}
+.stat{padding:15px;background:#fff;border-radius:14px;box-shadow:var(--shadow)}.stat b{font-size:23px;display:block}.stat span{font-size:11px;color:var(--muted)}
+.module{min-height:155px;position:relative}.module .icon{font-size:29px}.module h3{margin:7px 0}.module p{color:var(--muted);font-size:13px;line-height:1.45}
+.journey{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}.step{background:#fff;border:1px solid #dce7ed;border-radius:11px;padding:12px;min-height:82px}.step strong{font-size:12px;display:block}.step small{color:var(--muted)}.step.current{border:2px solid var(--blue)}.step.done{background:#effaf5;border-color:#a8d8c4}
+.choice{display:block;width:100%;text-align:left;background:#fff;border:1px solid #d7e2e9;border-radius:9px;padding:11px;margin:7px 0}.choice:hover{background:#f5faff}.correct{background:#e9f8f0!important;border-color:#43a574!important}.wrong{background:#fff0f0!important;border-color:#d56b6b!important}
+.feedback{display:none;padding:11px;border-radius:9px;margin-top:10px}.feedback.show{display:block}.ok{background:#e9f8f0}.bad{background:#fff0f0}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.field label{display:block;font-size:12px;font-weight:900;margin-bottom:5px}.field input,.field textarea,.field select{width:100%;padding:10px;border:1px solid #d6e2e9;border-radius:9px}.field textarea{min-height:90px}
+.tablewrap{overflow:auto}.table{width:100%;border-collapse:collapse}.table th,.table td{padding:9px;border-bottom:1px solid #e5edf2;text-align:left;font-size:13px}.table th{background:#f1f6f9}
+.badges{display:flex;flex-wrap:wrap;gap:10px}.badge{width:140px;text-align:center;padding:14px;border:1px solid #dfe8ed;border-radius:13px}.badge.lock{opacity:.42;filter:grayscale(1)}.badge div{font-size:28px}
+.notice{background:#fff8df;border:1px solid #efd57b;border-radius:10px;padding:11px;color:#6b581e}
+.login{max-width:520px;margin:50px auto}.login h1{margin-top:0}
+.modal{position:fixed;inset:0;background:#0b2638aa;display:none;align-items:center;justify-content:center;z-index:100;padding:16px}.modal.show{display:flex}.modalbox{background:#fff;border-radius:18px;max-width:850px;width:100%;max-height:90vh;overflow:auto;padding:22px}
+.toast{position:fixed;right:18px;bottom:18px;background:#173f62;color:#fff;padding:12px 16px;border-radius:11px;opacity:0;transform:translateY(10px);transition:.25s;z-index:200}.toast.show{opacity:1;transform:none}
+footer{text-align:center;padding:30px;color:#748694;font-size:12px}
+@media(max-width:850px){.hero{grid-template-columns:1fr}.grid,.grid4{grid-template-columns:1fr 1fr}.journey{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){header{padding:11px 13px}.brand{font-size:15px}.topstats{justify-content:flex-end}.pill{font-size:10px;padding:6px}.grid,.grid4,.form-grid{grid-template-columns:1fr}.journey{grid-template-columns:1fr}main{padding:0 11px}.hero{padding:21px}.hero h1{font-size:27px}}
+</style>
+</head>
+<body>
+<header>
+ <div class="brand">SMK English Interactive Learning Hub 2.0<small>SMK Negeri 1 Tonjong • Learn • Practice • Create • Achieve</small></div>
+ <div class="topstats"><span class="pill">Student: <b id="studentName">Guest</b></span><span class="pill">XP <b id="xp">0</b></span><span class="pill">Level <b id="level">1</b></span><span class="pill" id="modePill">Student Mode</span></div>
+</header>
+<nav id="nav">
+ <button data-page="dashboard" class="active">Dashboard</button><button data-page="learn">Learn</button><button data-page="recount">Recount</button><button data-page="procedure">Procedure</button><button data-page="narrative">Narrative</button><button data-page="vocational">Vocational English</button><button data-page="quiz">Quiz</button><button data-page="reflection">Reflection</button><button data-page="teacher">Teacher Dashboard</button>
+</nav>
+
+<main>
+<section id="login" class="page active">
+ <div class="card login">
+  <h1>🎓 Welcome to the Learning Hub</h1><p>Enter your name and class to start. This demo works offline; connect the Google Apps Script backend to synchronize data to Google Sheets.</p>
+  <div class="form-grid"><div class="field"><label>Student Name</label><input id="loginName" placeholder="e.g. Ahmad Rizky"></div><div class="field"><label>Class</label><input id="loginClass" placeholder="XI TKR 1"></div></div>
+  <div class="actions"><button class="btn blue" onclick="loginStudent()">Enter Learning Hub</button><button class="btn ghost" onclick="teacherLogin()">Teacher Login</button></div>
+  <p class="notice" style="margin-top:14px">Demo teacher PIN: <b>2026</b>. Change it in your deployment.</p>
+ </div>
+</section>
+
+<section id="dashboard" class="page">
+ <div class="hero"><div><span class="tag">SMK • GAMIFIED ENGLISH</span><h1>Learn. Practice. Create. Achieve.</h1><p>Interactive English for vocational students with text types, grammar, workplace vocabulary, quizzes, progress tracking and achievements.</p><div class="actions"><button class="btn" onclick="go('learn')">Start Learning</button><button class="btn ghost" onclick="go('vocational')">Vocational English</button></div></div>
+ <div class="card"><h3>Your Learning Progress</h3><div class="progress"><span id="progressBar"></span></div><p><b id="progressText">0%</b> core activities completed</p><div class="notice">Complete activities to earn XP and unlock badges.</div></div></div>
+ <div class="section grid4"><div class="stat"><b id="sXP">0</b><span>Experience Points</span></div><div class="stat"><b id="sLevel">1</b><span>Level</span></div><div class="stat"><b id="sDone">0/7</b><span>Core Activities</span></div><div class="stat"><b id="sScore">-</b><span>Quiz Score</span></div></div>
+ <div class="section"><div class="section-title"><h2>Learning Journey</h2><span>7 Core Activities</span></div><div class="journey" id="journey"></div></div>
+ <div class="section"><div class="section-title"><h2>Modules</h2></div><div class="grid" id="modules"></div></div>
+ <div class="section card"><div class="section-title"><h2>Achievement Badges</h2></div><div class="badges" id="badges"></div></div>
+</section>
+
+<section id="learn" class="page"><div class="card"><h2>📘 Learn: English Text Types</h2><h3>Recount Text</h3><p>Retells past experiences or events in chronological order.</p><ul><li>Purpose: retell past events.</li><li>Structure: Orientation → Events → Reorientation.</li><li>Language: simple past, action verbs, time connectors.</li></ul><div class="notice"><b>Example:</b> Last Saturday, our class visited a motorcycle workshop. First, we observed the mechanic. Then, we helped clean the tools. Finally, we discussed what we learned.</div><h3>Procedure Text</h3><p>Explains how to do or make something: Goal → Materials → Steps.</p><h3>Narrative Text</h3><p>Tells a story: Orientation → Complication → Resolution.</p><button class="btn green" onclick="complete('learn',50);go('recount')">Complete Learn</button></div></section>
+
+<section id="recount" class="page"><div class="card"><h2>🔢 Recount: Event Sequence</h2><p>Move the events into the correct order.</p><div id="sequence"></div><button class="btn blue" onclick="checkSequence()">Check Sequence</button><div id="seqFB" class="feedback"></div></div>
+<div class="card section"><h2>🔗 Time Connectors</h2><div id="connectors"></div></div>
+<div class="card section"><h2>✍️ Recount Builder</h2><p>Create your own short recount text.</p><button class="btn blue" onclick="openBuilder()">Open Builder</button></div></section>
+
+<section id="procedure" class="page"><div class="card"><h2>🛠 Procedure Text</h2><div class="notice"><b>How to Check a Car Battery</b><br><br>First, turn off the engine. Next, open the hood. Then, inspect the terminals. After that, measure the voltage with a multimeter. Finally, record the result.</div><h3>Question</h3><p>What is the purpose of a procedure text?</p><button class="choice" onclick="simple(this,true,'pFB')">To explain how to do or make something.</button><button class="choice" onclick="simple(this,false,'pFB')">To retell a holiday.</button><button class="choice" onclick="simple(this,false,'pFB')">To entertain with a story.</button><div id="pFB" class="feedback"></div><button class="btn green" onclick="complete('procedure',75)">Complete Procedure</button></div></section>
+
+<section id="narrative" class="page"><div class="card"><h2>📖 Narrative Text</h2><div class="notice"><b>The Honest Mechanic</b><br><br>A customer brought an old motorcycle to a workshop. The mechanic checked it and discovered that the problem was only a loose cable. The customer expected a large bill, but the mechanic charged only for the small repair. The customer thanked him for being honest.</div><p>Which part presents the problem?</p><button class="choice" onclick="simple(this,false,'nFB')">Orientation</button><button class="choice" onclick="simple(this,true,'nFB')">Complication</button><button class="choice" onclick="simple(this,false,'nFB')">Resolution</button><div id="nFB" class="feedback"></div><button class="btn green" onclick="complete('narrative',75)">Complete Narrative</button></div></section>
+
+<section id="vocational" class="page"><div class="section-title"><h2>🔧 Vocational English</h2><span>SMK workplace vocabulary</span></div><div class="grid" id="vocab"></div><div class="card section"><h2>Past Tense Verb Challenge</h2><div id="verbs"></div></div></section>
+
+<section id="quiz" class="page"><div class="card"><h2>🏆 Final Quiz</h2><p>10 questions • 15 XP per correct answer</p><div id="quizBox"></div><button class="btn blue" onclick="submitQuiz()">Submit Quiz</button><div id="quizFB" class="feedback"></div></div></section>
+
+<section id="reflection" class="page"><div class="card"><h2>💭 Reflection</h2><div class="form-grid"><div class="field"><label>What did you learn?</label><textarea id="rLearn"></textarea></div><div class="field"><label>What was difficult?</label><textarea id="rDiff"></textarea></div><div class="field"><label>What was easiest?</label><textarea id="rEasy"></textarea></div><div class="field"><label>Confidence</label><select id="rConf"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div></div><button class="btn green" onclick="saveReflection()">Save Reflection</button><div id="rFB" class="feedback"></div></div><div class="card section"><h2>🎓 Certificate</h2><button class="btn" onclick="certificate()">View Certificate</button></div></section>
+
+<section id="teacher" class="page"><div class="section-title"><h2>🧑‍🏫 Teacher Dashboard</h2><span id="syncStatus">Local Demo</span></div>
+<div class="grid4"><div class="stat"><b id="tStudents">0</b><span>Students</span></div><div class="stat"><b id="tAvg">0%</b><span>Average Quiz</span></div><div class="stat"><b id="tXP">0</b><span>Total XP</span></div><div class="stat"><b id="tComplete">0%</b><span>Avg Completion</span></div></div>
+<div class="card section"><h3>Student Progress</h3><div class="tablewrap"><table class="table"><thead><tr><th>Student</th><th>Class</th><th>XP</th><th>Level</th><th>Quiz</th><th>Progress</th><th>Last Sync</th></tr></thead><tbody id="studentTable"></tbody></table></div></div>
+<div class="card section"><h3>Teacher Tools</h3><div class="actions"><button class="btn blue" onclick="syncNow()">Sync to Google Sheets</button><button class="btn ghost" onclick="loadRemote()">Refresh Data</button><button class="btn" onclick="exportCSV()">Export CSV</button><button class="btn red" onclick="logout()">Logout</button></div><p class="notice" style="margin-top:12px">Set your Google Apps Script Web App URL in <code>API_URL</code> inside this file to enable cloud synchronization.</p></div>
+</section>
+</main>
+<footer>SMK English Interactive Learning Hub 2.0 • SMK Negeri 1 Tonjong</footer>
+<div id="toast" class="toast"></div><div id="modal" class="modal"><div class="modalbox" id="modalBox"></div></div>
+
+<script>
+/* ====== CONFIGURATION ======
+   Deploy Code.gs as a Google Apps Script Web App, then paste the /exec URL here.
+   Leave blank for offline/local demo mode.
+*/
+const API_URL="";
+const CORE=['learn','sequence','connectors','past','build','quiz','reflect'];
+const CORE_NAMES=['Learn','Sequence','Connectors','Past Tense','Build','Quiz','Reflect'];
+let student=JSON.parse(localStorage.getItem('smkStudentV2')||'null');
+let state=JSON.parse(localStorage.getItem('smkStateV2')||'null')||{xp:0,done:{},quiz:0,reflection:false,mode:'Student'};
+let sequence=[
+ {t:'We arrived at the workshop.',o:1},{t:'First, we observed the mechanic.',o:2},
+ {t:'Then, we helped clean the tools.',o:3},{t:'Finally, we discussed the lesson.',o:4}
+];
+sequence.sort(()=>Math.random()-.5);
+const connectors=[['___, we arrived at the workshop.',['First','Finally','Because'],0],['___, we observed the mechanic.',['Next','Yesterday','Although'],0],['___, we cleaned the tools.',['Then','Who','Where'],0],['___, we discussed the lesson.',['Finally','Before','While'],0]];
+const questions=[
+['What is the purpose of a recount text?',['To retell past events','To give instructions','To describe a machine'],0],
+['Which tense is common in recount text?',['Simple present','Simple past','Future'],1],
+['Which connector introduces the first event?',['Finally','First','Because'],1],
+['Past form of go?',['goed','gone','went'],2],
+['Which part introduces who, where and when?',['Orientation','Events','Reorientation'],0],
+['Purpose of a procedure text?',['Explain steps','Retell a holiday','Tell a story'],0],
+['Which is a time connector?',['Quickly','Then','Beautiful'],1],
+['The mechanic ___ the battery yesterday.',['checks','checked','checking'],1],
+['Which is a workplace?',['Workshop','Bedroom','Playground'],0],
+['A narrative commonly contains a ___.',['complication','shopping list','manual'],0]
+];
+const vocab=[['engine','mesin'],['brake','rem'],['clutch','kopling'],['gearbox','transmisi'],['battery','baterai'],['wrench','kunci pas'],['screwdriver','obeng'],['workshop','bengkel'],['diagnose','mendiagnosis'],['repair','memperbaiki'],['maintenance','perawatan'],['safety helmet','helm keselamatan']];
+function save(){localStorage.setItem('smkStudentV2',JSON.stringify(student));localStorage.setItem('smkStateV2',JSON.stringify(state));render()}
+function toast(x){let t=document.getElementById('toast');t.textContent=x;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200)}
+function lvl(){return state.xp<100?1:state.xp<250?2:state.xp<400?3:state.xp<600?4:5}
+function complete(k,x){if(!state.done[k]){state.done[k]=true;state.xp+=x;toast('+'+x+' XP • Activity completed');save()}else toast('Already completed')}
+function go(p){if(!student&&p!=='login'){document.getElementById('login').classList.add('active');return}document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById(p).classList.add('active');document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===p));if(p==='teacher')renderTeacher();window.scrollTo({top:0,behavior:'smooth'})}
+document.querySelectorAll('#nav button').forEach(b=>b.onclick=()=>go(b.dataset.page));
+function loginStudent(){let n=document.getElementById('loginName').value.trim(),c=document.getElementById('loginClass').value.trim();if(!n||!c){toast('Enter name and class');return}student={name:n,className:c,id:n.toLowerCase().replace(/[^a-z0-9]+/g,'-')+'-'+c.replace(/\s+/g,'-').toLowerCase()};state.mode='Student';save();go('dashboard');syncNow()}
+function teacherLogin(){let p=prompt('Teacher PIN');if(p==='2026'){state.mode='Teacher';save();go('teacher')}else toast('Incorrect PIN')}
+function logout(){student=null;localStorage.removeItem('smkStudentV2');state={xp:0,done:{},quiz:0,reflection:false,mode:'Student'};localStorage.setItem('smkStateV2',JSON.stringify(state));go('login')}
+function render(){document.getElementById('studentName').textContent=student?.name||'Guest';document.getElementById('xp').textContent=state.xp;document.getElementById('level').textContent=lvl();document.getElementById('modePill').textContent=state.mode==='Teacher'?'Teacher Mode':'Student Mode';let d=CORE.filter(k=>state.done[k]).length,p=Math.round(d/7*100);document.getElementById('progressBar').style.width=p+'%';document.getElementById('progressText').textContent=p+'%';document.getElementById('sXP').textContent=state.xp;document.getElementById('sLevel').textContent=lvl();document.getElementById('sDone').textContent=d+'/7';document.getElementById('sScore').textContent=state.quiz?state.quiz+'%':'-';journey();modules();badges()}
+function journey(){let e=document.getElementById('journey');e.innerHTML=CORE_NAMES.map((n,i)=>{let k=CORE[i],done=state.done[k],unlocked=i===0||state.done[CORE[i-1]];return `<div class="step ${done?'done':unlocked?'current':''}"><strong>${i+1}. ${n} ${done?'✓':unlocked?'':'🔒'}</strong><small>${['Concept & Example','Arrange Events','Time Connectors','Verb Challenge','Create a Recount','Check Understanding','Self Assessment'][i]}</small></div>`}).join('')}
+function modules(){let m=[['📘','Recount','Retell past experiences.','recount'],['🛠️','Procedure','Explain steps and processes.','procedure'],['📖','Narrative','Explore stories and conflict.','narrative'],['🔧','Vocational English','Workplace vocabulary.','vocational'],['🏆','Quiz','Check understanding.','quiz'],['💭','Reflection','Reflect on progress.','reflection']];document.getElementById('modules').innerHTML=m.map(x=>`<div class="card module"><div class="icon">${x[0]}</div><h3>${x[1]}</h3><p>${x[2]}</p><button class="btn ghost" onclick="go('${x[3]}')">Open →</button></div>`).join('')}
+function badges(){let b=[['🥇','Recount Starter',state.done.learn],['🧩','Event Master',state.done.sequence],['🔗','Connector Expert',state.done.connectors],['⏱️','Past Tense Hero',state.done.past],['✍️','Recount Writer',state.done.build],['🏆','Quiz Champion',state.done.quiz],['🌟','Finisher',CORE.every(k=>state.done[k])]];document.getElementById('badges').innerHTML=b.map(x=>`<div class="badge ${x[2]?'':'lock'}"><div>${x[0]}</div><b>${x[1]}</b><small>${x[2]?'Unlocked':'Locked'}</small></div>`).join('')}
+function renderSequence(){document.getElementById('sequence').innerHTML=sequence.map((x,i)=>`<div class="card" style="margin:7px 0;padding:11px;display:flex;justify-content:space-between;gap:8px"><span><b>${i+1}.</b> ${x.t}</span><span><button class="btn ghost" onclick="moveSeq(${i},-1)">↑</button> <button class="btn ghost" onclick="moveSeq(${i},1)">↓</button></span></div>`).join('')}
+function moveSeq(i,d){let j=i+d;if(j<0||j>=sequence.length)return;[sequence[i],sequence[j]]=[sequence[j],sequence[i]];renderSequence()}
+function checkSequence(){let ok=sequence.every((x,i)=>x.o===i+1),f=document.getElementById('seqFB');f.className='feedback show '+(ok?'ok':'bad');f.textContent=ok?'✅ Correct! +75 XP':'❌ Not yet. Check the time sequence and try again.';if(ok)complete('sequence',75)}
+function renderConnectors(){document.getElementById('connectors').innerHTML=connectors.map((q,i)=>`<div style="margin:10px 0"><b>${i+1}. ${q[0]}</b>${q[1].map((o,j)=>`<button class="choice" onclick="conn(this,${j===q[2]},${i})">${o}</button>`).join('')}<div id="cf${i}" class="feedback"></div></div>`).join('')}
+function conn(b,ok,i){let f=document.getElementById('cf'+i);f.className='feedback show '+(ok?'ok':'bad');f.textContent=ok?'Correct!':'Try again.';b.classList.add(ok?'correct':'wrong');if(ok&&[0,1,2,3].every(i=>document.getElementById('cf'+i)?.textContent==='Correct!'))complete('connectors',75)}
+function simple(b,ok,id){let f=document.getElementById(id);f.className='feedback show '+(ok?'ok':'bad');f.textContent=ok?'✅ Correct!':'❌ Try again.';b.classList.add(ok?'correct':'wrong')}
+function renderVocab(){document.getElementById('vocab').innerHTML=vocab.map(x=>`<div class="card"><b>${x[0]}</b><br><small style="color:#718392">${x[1]}</small></div>`).join('');let v=[['go','went'],['eat','ate'],['see','saw'],['buy','bought'],['visit','visited']];document.getElementById('verbs').innerHTML=v.map((x,i)=>`<div style="margin:10px 0"><b>${x[0]} →</b> <input id="v${i}" style="padding:8px;border:1px solid #d7e2e9;border-radius:8px"><span id="vf${i}"></span></div>`).join('')+'<button class="btn blue" onclick="checkVerbs()">Check</button>'}
+function checkVerbs(){let v=[['go','went'],['eat','ate'],['see','saw'],['buy','bought'],['visit','visited']],s=0;v.forEach((x,i)=>{let a=document.getElementById('v'+i).value.trim().toLowerCase();document.getElementById('vf'+i).textContent=a===x[1]?' ✓':' → '+x[1];if(a===x[1])s++});toast('Verb score '+s+'/5');if(s===5)complete('past',100)}
+function openBuilder(){document.getElementById('modalBox').innerHTML=`<h2>✍️ Recount Builder</h2><div class="form-grid"><div class="field"><label>Who?</label><input id="bw" value="My class"></div><div class="field"><label>Where?</label><input id="bwhere" value="a workshop"></div><div class="field"><label>When?</label><input id="bwhen" value="last Saturday"></div><div class="field"><label>Event 1</label><input id="be1" value="observed the mechanic"></div><div class="field"><label>Event 2</label><input id="be2" value="helped clean the tools"></div><div class="field"><label>Event 3</label><input id="be3" value="discussed the lesson"></div><div class="field" style="grid-column:1/-1"><label>Reorientation</label><input id="br" value="It was a useful experience."></div></div><div class="actions"><button class="btn blue" onclick="build()">Generate</button><button class="btn ghost" onclick="closeModal()">Close</button></div><pre id="out" class="card" style="white-space:pre-wrap"></pre>`;document.getElementById('modal').classList.add('show')}
+function build(){let t=`${bw.value} visited ${bwhere.value} ${bwhen.value}.\\n\\nFirst, we ${be1.value}. Then, we ${be2.value}. After that, we ${be3.value}. Finally, ${br.value}`;document.getElementById('out').textContent=t;complete('build',100)}
+function closeModal(){document.getElementById('modal').classList.remove('show')}
+function renderQuiz(){document.getElementById('quizBox').innerHTML=questions.map((q,i)=>`<div class="card" style="margin:9px 0;box-shadow:none"><b>${i+1}. ${q[0]}</b>${q[1].map((o,j)=>`<label class="choice"><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join('')}</div>`).join('')}
+function submitQuiz(){let s=0;for(let i=0;i<questions.length;i++){let a=document.querySelector(`input[name=q${i}]:checked`);if(!a){toast('Answer all questions');return}if(+a.value===questions[i][2])s++}let pct=Math.round(s/questions.length*100),xp=s*15;if(!state.done.quiz){state.done.quiz=true;state.xp+=xp}state.quiz=pct;save();let f=document.getElementById('quizFB');f.className='feedback show ok';f.innerHTML=`🏆 Score <b>${s}/${questions.length} (${pct}%)</b> • +${xp} XP`;syncNow()}
+function saveReflection(){state.reflection=true;complete('reflect',50);let f=document.getElementById('rFB');f.className='feedback show ok';f.textContent='Reflection saved. +50 XP when first completed.';save();syncNow()}
+function certificate(){if(!CORE.every(k=>state.done[k])){toast('Complete all 7 core activities first');return}document.getElementById('modalBox').innerHTML=`<div style="border:8px double #2b638c;padding:28px;text-align:center"><h4>SMK ENGLISH INTERACTIVE LEARNING HUB</h4><h1>Certificate of Completion</h1><p>Presented to</p><h2>${student.name}</h2><p>for completing the interactive English learning journey.</p><p><b>XP ${state.xp}</b> • <b>Level ${lvl()}</b></p><button class="btn blue" onclick="window.print()">Print</button> <button class="btn ghost" onclick="closeModal()">Close</button></div>`;document.getElementById('modal').classList.add('show')}
+async function api(action,payload={}){if(!API_URL)return null;try{let r=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action,...payload})});return await r.json()}catch(e){toast('Cloud sync unavailable; using local mode');return null}}
+async function syncNow(){if(!student||!API_URL)return;let r=await api('saveStudent',{student,state});if(r?.ok)document.getElementById('syncStatus').textContent='Cloud synced';}
+async function loadRemote(){let r=await api('listStudents');if(r?.ok){window.remoteStudents=r.students;renderTeacher();toast('Data refreshed')}}
+async function renderTeacher(){if(!window.remoteStudents){window.remoteStudents=[];if(student)window.remoteStudents=[{name:student.name,className:student.className,xp:state.xp,level:lvl(),quiz:state.quiz,progress:Math.round(CORE.filter(k=>state.done[k]).length/7*100),updated:new Date().toLocaleString()}]}let a=window.remoteStudents;document.getElementById('tStudents').textContent=a.length;document.getElementById('tAvg').textContent=a.length?Math.round(a.reduce((x,s)=>x+(+s.quiz||0),0)/a.length)+'%':'0%';document.getElementById('tXP').textContent=a.reduce((x,s)=>x+(+s.xp||0),0);document.getElementById('tComplete').textContent=a.length?Math.round(a.reduce((x,s)=>x+(+s.progress||0),0)/a.length)+'%':'0%';document.getElementById('studentTable').innerHTML=a.map(s=>`<tr><td>${s.name||''}</td><td>${s.className||''}</td><td>${s.xp||0}</td><td>${s.level||1}</td><td>${s.quiz||0}%</td><td>${s.progress||0}%</td><td>${s.updated||''}</td></tr>`).join('')}
+function exportCSV(){let a=window.remoteStudents||[];let csv='Student,Class,XP,Level,Quiz,Progress,Updated\\n'+a.map(s=>[s.name,s.className,s.xp,s.level,s.quiz,s.progress,s.updated].map(v=>`"${String(v??'').replaceAll('"','""')}"`).join(',')).join('\\n');let blob=new Blob([csv],{type:'text/csv'}),u=URL.createObjectURL(blob),ael=document.createElement('a');ael.href=u;ael.download='smk-english-students.csv';ael.click();URL.revokeObjectURL(u)}
+renderConnectors();renderVocab();renderQuiz();renderSequence();render();
+if(student){document.getElementById('login').classList.remove('active');document.getElementById('dashboard').classList.add('active')}
+</script>
+</body>
+</html>
